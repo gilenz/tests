@@ -10,10 +10,10 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'apt-get update'
-                sh 'apt-get install python3 -y'
-                sh 'apt-get install python3-pip'
-                sh 'apt-get install poetry'
+                sh 'sudo apt-get update'
+                sh 'sudo apt-get install python3 -y'
+                sh 'sudo apt-get install python3-pip'
+                sh 'sudo apt-get install poetry'
             }
         }
 
