@@ -1,11 +1,13 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.8-slim'
-            args '-u root'  // Run as root user
-        }
-    }
+   agent any
     stages {
+        stage('Install Sudo') {
+            steps {
+                sh 'apt-get update'
+                sh 'apt-get install -y sudo'
+            }
+        }
+    
         stage('Checkout') {
             steps {
                 checkout scm
