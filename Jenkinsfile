@@ -4,6 +4,7 @@ pipeline {
             image 'python:3.8-slim'
             args '-u root'  // Run as root user
         }
+    }
     stages {
         stage('Checkout') {
             steps {
