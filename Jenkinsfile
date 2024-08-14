@@ -10,9 +10,10 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'apk add python3'
-                sh 'apk add python3 python3-pip'
-                sh 'apk add pip install poetry'
+                sh 'apt-get update'
+                sh 'apt-get install python3 -y'
+                sh 'apt-get install python3-pip'
+                sh 'apt-get install poetry'
             }
         }
 
