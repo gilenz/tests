@@ -1,46 +1,20 @@
 pipeline {
-   agent {
-        docker {
-            docker { alpine:3.20 }
-        }
-    }
+    agent {
+       docker { image 'alpine:3.20' }
     stages {
-        stage('Install Sudo') {
+        stage('Build') {
             steps {
-                sh 'apt-get update'
-                sh 'apt-get install -y sudo'
+                echo "build"
             }
         }
-    
-        stage('Checkout') {
+        stage('Test') {
             steps {
-                checkout scm
+                echo "test"
             }
         }
-
-        stage('Install Dependencies') {
+        stage('Deploy') {
             steps {
-                sh 'apt-get update'
-                sh 'apt-get install python3-pip'
-                sh 'apt-get install poetry'
-            }
-        }
-
-        stage('Determine Version') {
-            steps {
-                sh 'poetry version patch'
-            }
-        }
-
-        stage('Tag and Push') {
-            steps {
-                script {
-                    def newVersion = sh(script: "poetry version | cut -d' ' -f2", returnStdout: true).trim()
-                    sh "git commit -am 'Bump version to ${newVersion}'"
-                    sh 'git push origin HEAD'
-                    sh "git tag v${newVersion}"
-                    sh 'git push --tags'
-                }
+                echo "deploy"
             }
         }
     }
