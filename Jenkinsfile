@@ -1,15 +1,9 @@
 pipeline {
     agent any
 
-    // Define environment variables if needed
-    environment {
-        BRANCH_NAME = "${env.BRANCH_NAME}"
-    }
-
     stages {
         stage('Check Branch Conditions') {
             when {
-                // Run only for specific branch names and conditions
                 expression {
                     def branchName = env.BRANCH_NAME
                     return branchName.startsWith('release') || branchName == 'develop'
@@ -17,7 +11,6 @@ pipeline {
             }
             steps {
                 script {
-                    // Additional logic to determine if the pipeline should run
                     def shouldRun = false
 
                     // PR to release* branch
@@ -41,7 +34,7 @@ pipeline {
                     }
 
                     if (!shouldRun) {
-                        // Skip the build if conditions are not met
+                        echo "Skipping build for branch: ${branchName}"
                         currentBuild.result = 'SUCCESS'
                         return
                     }
@@ -51,7 +44,6 @@ pipeline {
             }
         }
 
-        // Define other stages as needed
         stage('Build') {
             steps {
                 echo "Building the project..."
